@@ -48,7 +48,13 @@
     "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
     "text_style": "Text style",
-    "text": "Text"
+    "text": "Text",
+    "logo": "Logo",
+    "logo_width": "Logo width",
+    "sticky_header": "Sticky header",
+    "transparent_on_home": "Transparent on homepage",
+    "nav_alignment": "Navigation alignment",
+    "show_cart_count": "Show cart count badge"
   },
   "options": {
     "alignment": {
@@ -72,6 +78,6 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
-    },
+    }
   }
 }

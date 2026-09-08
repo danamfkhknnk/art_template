@@ -31,7 +31,7 @@
         "label": "t:labels.page_width",
         "options": [
           {
-            "value": "90rem",
+            "value": "100rem",
             "label": "t:options.page_width.narrow"
           },
           {
@@ -39,7 +39,7 @@
             "label": "t:options.page_width.wide"
           }
         ],
-        "default": "90rem"
+        "default": "100rem"
       },
       {
         "type": "range",
@@ -57,16 +57,84 @@
     "name": "t:general.colors",
     "settings": [
       {
+        "type": "header",
+        "content": "Base & Text"
+      },
+      {
         "type": "color",
         "id": "background_color",
-        "default": "#FFFFFF",
-        "label": "t:labels.background"
+        "default": "#0A0A0A",
+        "label": "Base"
       },
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#333333",
-        "label": "t:labels.foreground"
+        "default": "#F5F5F5",
+        "label": "Ink"
+      },
+      {
+        "type": "header",
+        "content": "Secondary"
+      },
+      {
+        "type": "color",
+        "id": "muted_color",
+        "default": "#6B6B6B",
+        "label": "Muted"
+      },
+      {
+        "type": "color",
+        "id": "surface_color",
+        "default": "#141414",
+        "label": "Surface"
+      },
+      {
+        "type": "header",
+        "content": "Accent"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "default": "#F97316",
+        "label": "Accent"
+      },
+      {
+        "type": "color",
+        "id": "accent_hover_color",
+        "default": "#EA580C",
+        "label": "Accent Hover"
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "color",
+        "id": "button_primary_bg",
+        "default": "#F97316",
+        "label": "Primary Button BG"
+      },
+      {
+        "type": "color",
+        "id": "button_primary_text",
+        "default": "#FFFFFF",
+        "label": "Primary Button Text"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_bg",
+        "default": "transparent",
+        "label": "Secondary Button BG"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_text",
+        "default": "#F5F5F5",
+        "label": "Secondary Button Text"
+      },
+      {
+        "type": "header",
+        "content": "Inputs"
       },
       {
         "type": "range",

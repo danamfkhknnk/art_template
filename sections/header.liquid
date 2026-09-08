@@ -1,70 +1,63 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+<header class="fixed top-0 left-0 right-0 z-50 text-(--color-foreground)">
+  <nav class="bg-dark/80 backdrop-blur-md">
+    <div class="section-content flex items-center h-16 px-4">
+      <div class="flex-1">
+        <h2 class="text-lg font-medium tracking-wide lowercase whitespace-nowrap">
+          {{ shop.name | link_to: routes.root_url }}
+        </h2>
+      </div>
 
-  <div class="header__menu">
+      <div class="hidden md:flex flex-1 justify-center gap-2 whitespace-nowrap">
+        {% for link in section.settings.menu.links %}
+          {{ link.title | link_to: link.url }}
+        {% endfor %}
+      </div>
+
+      <div class="flex-1 flex items-center justify-end gap-4">
+        {% if shop.customer_accounts_enabled %}
+          <shopify-account menu="{{ section.settings.customer_account_menu }}">
+            <span class="block w-6 h-6">{{ 'icon-account.svg' | inline_asset_content }}</span>
+          </shopify-account>
+        {% endif %}
+
+        <a href="{{ routes.cart_url }}" class="relative block w-6 h-6">
+          {% if cart.item_count > 0 %}
+            <sup class="absolute -top-2 -right-2 text-xs bg-(--color-accent) text-(--color-background) rounded-full w-4 h-4 flex items-center justify-center">{{ cart.item_count }}</sup>
+          {% endif %}
+          {{ 'icon-cart.svg' | inline_asset_content }}
+        </a>
+
+        <label for="mobile-menu-toggle" class="md:hidden cursor-pointer w-8 h-8 flex flex-col items-center justify-center gap-1.5">
+          <span class="block w-5 h-0.5 bg-(--color-foreground) transition-all duration-300"></span>
+          <span class="block w-5 h-0.5 bg-(--color-foreground) transition-all duration-300"></span>
+          <span class="block w-5 h-0.5 bg-(--color-foreground) transition-all duration-300"></span>
+        </label>
+      </div>
+    </div>
+  </nav>
+
+  <input type="checkbox" id="mobile-menu-toggle" class="hidden peer" aria-hidden="true">
+
+  <div class="hidden peer-checked:flex md:hidden flex-col items-center py-8 bg-dark/95 backdrop-blur-md border-t border-(--color-muted)/20">
     {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
+      <a href="{{ link.url }}" class="py-3 text-body-lg text-(--color-foreground) hover:text-(--color-accent) transition-colors">
+        {{ link.title }}
+      </a>
     {% endfor %}
   </div>
-
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      <shopify-account menu="{{ section.settings.customer_account_menu }}">
-        {{ 'icon-account.svg' | inline_asset_content }}
-      </shopify-account>
-    {% endif %}
-
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
-
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
-  </div>
 </header>
-
-{% stylesheet %}
-  header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  header a {
-    position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
-  }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.header",
+  "tag": "section",
+  "class": "shopify-section",
   "settings": [
     {
       "type": "link_list",
       "id": "menu",
-      "label": "t:labels.menu"
+      "label": "t:labels.menu",
+      "default": "main-menu"
     },
     {
       "type": "link_list",

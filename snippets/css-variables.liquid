@@ -1,5 +1,4 @@
 {% style %}
-  {% # Loads all font variantions with display: swap %}
   {{ settings.type_primary_font | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
@@ -9,10 +8,41 @@
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};
+    --font-display--family: "Syne", sans-serif;
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
+
     --color-background: {{ settings.background_color }};
     --color-foreground: {{ settings.foreground_color }};
+    --color-muted: {{ settings.muted_color }};
+    --color-surface: {{ settings.surface_color }};
+    --color-accent: {{ settings.accent_color }};
+    --color-accent-hover: {{ settings.accent_hover_color }};
+    --color-secondary: #EC4899;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+
+    --gradient-primary: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+    --gradient-primary-hover: linear-gradient(135deg, var(--color-accent-hover), #DB2777);
+    --gradient-dark: linear-gradient(135deg, #0A0A0A, #1a1a2e, #0A0A0A);
+    --gradient-surface: linear-gradient(135deg, var(--color-surface), rgba(30,30,30,0.8));
+
+    --glow-accent: 0 0 30px rgba(249, 115, 22, 0.3);
+    --glow-accent-lg: 0 0 60px rgba(249, 115, 22, 0.4);
+    --glow-secondary: 0 0 30px rgba(236, 72, 153, 0.3);
+    --glow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+    --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+    --border-accent: 1px solid rgba(249, 115, 22, 0.3);
+
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+    --icon-stroke-width: 1.5px;
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
   }
 {% endstyle %}

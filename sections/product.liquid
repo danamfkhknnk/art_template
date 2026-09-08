@@ -1,52 +1,161 @@
-{% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
+<section class="relative py-20 px-4">
+  <div class="absolute inset-0 bg-dark/60 backdrop-blur-sm"></div>
+  <div class="relative section-content">
+    {% if section.settings.heading != blank %}
+      <div class="text-center mb-12">
+        <p class="text-caption tracking-wider uppercase text-(--color-accent) mb-4">{{ section.settings.subheading }}</p>
+        <h2 class="text-heading font-display text-(--color-foreground)">{{ section.settings.heading }}</h2>
+      </div>
+    {% endif %}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
-{% endcomment %}
-
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
-</div>
-
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
-
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
-
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
-          {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ section.settings.columns }} gap-6">
+      {% for block in section.blocks %}
+        <div class="bg-surface rounded-lg overflow-hidden group" {{ block.shopify_attributes }}>
+          <div class="aspect-square overflow-hidden">
+            {% if block.settings.image != blank %}
+              <img 
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.title }}"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+                width="600"
+                height="600"
+              >
+            {% else %}
+              <div class="w-full h-full bg-(--color-dark) flex items-center justify-center">
+                <span class="text-muted">No Image</span>
+              </div>
+            {% endif %}
+          </div>
+          <div class="p-6">
+            {% if block.settings.title != blank %}
+              <h3 class="text-subheading font-display text-(--color-foreground) mb-2">{{ block.settings.title }}</h3>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class="text-body-sm text-(--color-muted) mb-4">{{ block.settings.description }}</p>
+            {% endif %}
+            <div class="flex items-center justify-between">
+              {% if block.settings.price != blank %}
+                <p class="text-body-lg text-(--color-accent) font-medium">{{ block.settings.price }}</p>
+              {% endif %}
+              {% if block.settings.button_label != blank %}
+                <a href="{{ block.settings.button_link }}" class="text-body-sm text-(--color-foreground) hover:text-(--color-accent) transition-colors">
+                  {{ block.settings.button_label }} →
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
       {% endfor %}
-    </select>
-
-    <input type="text" name="quantity" min="1" value="1">
-
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
-</div>
+    </div>
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "t:general.product",
-  "settings": [],
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  }
+  "name": "Product",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Featured"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Products"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Art Print"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "High quality art print on premium paper."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$29.99"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "View Details"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "title": "Art Print - Sunset",
+            "description": "High quality art print on premium paper.",
+            "price": "$29.99",
+            "button_label": "View Details"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "Art Print - Portrait",
+            "description": "Custom portrait print from your photos.",
+            "price": "$49.99",
+            "button_label": "View Details"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "Art Print - Character",
+            "description": "Original character design print.",
+            "price": "$39.99",
+            "button_label": "View Details"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

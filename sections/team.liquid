@@ -1,0 +1,103 @@
+<section class="relative py-24 px-4">
+  <div class="absolute inset-0 bg-dark/60 backdrop-blur-sm"></div>
+  <div class="relative section-content">
+    {% if section.settings.heading != blank %}
+      <div class="text-center mb-16">
+        <p class="text-caption tracking-[0.3em] uppercase text-(--color-accent) mb-4 font-medium inline-flex items-center gap-2 reveal">
+          <span class="w-8 h-px bg-gradient-to-r from-transparent to-(--color-accent)"></span>
+          {{ section.settings.subheading }}
+          <span class="w-8 h-px bg-gradient-to-l from-transparent to-(--color-accent)"></span>
+        </p>
+        <h2 class="text-heading font-display text-(--color-foreground) reveal reveal-delay-1">{{ section.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {% assign photos = "art1.png,art2.png,art3.png" | split: "," %}
+      {% assign names = "Alex Chen,Jordan Lee,Sam Rivera" | split: "," %}
+      {% assign roles = "Lead Artist,Illustrator,Concept Artist" | split: "," %}
+      {% assign bios = "Specializing in digital portraits and character design.,Creating vibrant illustrations for brands and individuals.,Bringing ideas to life through concept art and world-building." | split: "," %}
+      {% assign tags = "Portrait|Character|Illustration|Live2D,Digital Art|Brand|Storyboard,Concept|Environment|3D,Character|Scene|World Building" | split: "," %}
+      {% assign statuses = "Open,Closed,Open" | split: "," %}
+
+      {% for photo in photos %}
+        <div class="group relative reveal" style="transition-delay: {{ forloop.index | times: 0.15 }}s;">
+          <!-- Gradient border wrapper -->
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-(--color-muted)/10 to-(--color-muted)/5 p-[1px] group-hover:from-(--color-accent) group-hover:to-(--color-secondary) transition-all duration-500">
+            <div class="h-full w-full rounded-2xl bg-(--color-dark-surface)"></div>
+          </div>
+
+          <div class="relative z-10 rounded-2xl overflow-hidden">
+            <!-- Photo -->
+            <div class="relative aspect-[3/4] overflow-hidden">
+              <div class="absolute inset-0 bg-(--color-accent)/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <img
+                src="{{ photo | asset_url }}"
+                alt="{{ names[forloop.index0] }}"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                loading="lazy"
+                width="400"
+                height="533"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-(--color-dark-surface) via-(--color-dark-surface)/20 to-transparent"></div>
+
+              <!-- Availability badge -->
+              <div class="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-(--color-dark-surface)/80 backdrop-blur-sm border border-(--color-muted)/10">
+                <span class="w-2 h-2 rounded-full {% if statuses[forloop.index0] == 'Open' %}bg-(--color-success) animate-pulse{% else %}bg-red-400{% endif %}"></span>
+                <span class="text-caption text-(--color-foreground)">{{ statuses[forloop.index0] }}</span>
+              </div>
+
+              <!-- Text overlay -->
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-center">
+                <h3 class="text-subheading font-display text-(--color-foreground) mb-1">{{ names[forloop.index0] }}</h3>
+                <p class="text-caption tracking-wider uppercase text-(--color-accent) mb-3">{{ roles[forloop.index0] }}</p>
+                <div class="w-10 h-0.5 bg-gradient-to-r from-(--color-accent) to-(--color-secondary) mx-auto mb-3"></div>
+                <p class="text-body-sm text-(--color-muted) leading-relaxed mb-3">{{ bios[forloop.index0] }}</p>
+
+                <!-- Social links -->
+                <div class="flex items-center justify-center gap-2">
+                  <a href="#" class="w-8 h-8 rounded-full bg-surface/50 border border-(--color-muted)/10 flex items-center justify-center hover:border-(--color-accent)/30 hover:bg-(--color-accent)/10 transition-all duration-300">
+                    <svg class="w-4 h-4 text-(--color-muted)" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </a>
+                  <a href="#" class="w-8 h-8 rounded-full bg-surface/50 border border-(--color-muted)/10 flex items-center justify-center hover:border-(--color-accent)/30 hover:bg-(--color-accent)/10 transition-all duration-300">
+                    <svg class="w-4 h-4 text-(--color-muted)" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  </a>
+                  <a href="#" class="w-8 h-8 rounded-full bg-surface/50 border border-(--color-muted)/10 flex items-center justify-center hover:border-(--color-accent)/30 hover:bg-(--color-accent)/10 transition-all duration-300">
+                    <svg class="w-4 h-4 text-(--color-muted)" fill="currentColor" viewBox="0 0 24 24"><path d="M4.935 0A4.924 4.924 0 000 4.935v14.13A4.924 4.924 0 004.935 24h14.13A4.924 4.924 0 0024 19.065V4.935A4.924 4.924 0 0019.065 0zm7.826 3.19c2.853 0 5.165 2.312 5.165 5.165v1.594c0 2.853-2.312 5.165-5.165 5.165-2.853 0-5.165-2.312-5.165-5.165V8.355c0-2.853 2.312-5.165 5.165-5.165zm0 2.366c-1.552 0-2.799 1.247-2.799 2.799v1.594c0 1.552 1.247 2.799 2.799 2.799 1.552 0 2.799-1.247 2.799-2.799V8.355c0-1.552-1.247-2.799-2.799-2.799zm5.067 2.013c.55 0 .996.446.996.996s-.446.996-.996.996-.996-.446-.996-.996.446-.996.996-.996zm-5.067 1.498c.87 0 1.575.705 1.575 1.575v1.594c0 .87-.705 1.575-1.575 1.575-.87 0-1.575-.705-1.575-1.575V9.637c0-.87.705-1.575 1.575-1.575z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Our Team",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Meet The Artists"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Team"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Team"
+    }
+  ]
+}
+{% endschema %}

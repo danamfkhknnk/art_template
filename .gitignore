@@ -8,6 +8,10 @@
 ehthumbs.db
 Thumbs.db
 node_modules/
+package-lock.json
+
+# Source files (Tailwind)
+src/
 
 # Shopify CLI files
 .shopify/

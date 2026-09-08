@@ -1,0 +1,188 @@
+<section class="relative w-full h-screen min-h-[600px] flex flex-col items-center justify-center overflow-hidden">
+  <!-- Background image with parallax -->
+  <div class="fixed inset-0 -z-10">
+    <img
+      src="{{ 'hero.avif' | asset_url }}"
+      alt="{{ section.settings.subheading | default: 'Hero' }}"
+      class="w-full h-full object-cover"
+      loading="eager"
+      width="1920"
+      height="1080"
+    >
+    <!-- Animated gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/50 to-dark/90"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-dark/30 via-transparent to-dark/30"></div>
+    <div class="absolute inset-0 animate-gradient-shift opacity-30" style="background: linear-gradient(45deg, transparent 30%, rgba(249,115,22,0.1) 50%, rgba(236,72,153,0.08) 70%, transparent 90%); background-size: 400% 400%;"></div>
+  </div>
+
+  <!-- Subheading -->
+  <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+    {% if section.settings.subheading != blank %}
+      <p class="text-caption tracking-[0.3em] uppercase text-(--color-accent) mb-6 font-medium inline-flex items-center gap-3 reveal">
+        <span class="w-8 h-px bg-gradient-to-r from-transparent to-(--color-accent)"></span>
+        {{ section.settings.subheading }}
+        <span class="w-8 h-px bg-gradient-to-l from-transparent to-(--color-accent)"></span>
+      </p>
+    {% endif %}
+  </div>
+
+  <!-- Running text marquee -->
+  <div class="relative z-10 w-full overflow-hidden py-6">
+    <div class="marquee-track">
+      {% for i in (1..8) %}
+        <span class="marquee-item">{{ section.settings.tagline }}&nbsp;&mdash;&nbsp;</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Description + CTA -->
+  <div class="relative z-10 text-center px-4 max-w-3xl mx-auto mt-8">
+    {% if section.settings.description != blank %}
+      <p class="text-body-lg text-((--color-foreground))/70 mb-10 leading-relaxed reveal reveal-delay-1">
+        {{ section.settings.description }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link }}" class="btn-primary inline-flex items-center gap-2 reveal reveal-delay-2">
+        <span>{{ section.settings.button_label }}</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    {% endif %}
+  </div>
+
+  <!-- Stats row -->
+  <div class="relative z-10 flex items-center gap-8 md:gap-12 mt-12 reveal reveal-delay-3">
+    <div class="text-center">
+      <p class="text-subheading font-display font-bold gradient-text">500+</p>
+      <p class="text-caption text-(--color-muted) tracking-wide">Artworks</p>
+    </div>
+    <div class="w-px h-8 bg-gradient-to-b from-transparent via-(--color-accent)/30 to-transparent"></div>
+    <div class="text-center">
+      <p class="text-subheading font-display font-bold gradient-text">200+</p>
+      <p class="text-caption text-(--color-muted) tracking-wide">Happy Clients</p>
+    </div>
+    <div class="w-px h-8 bg-gradient-to-b from-transparent via-(--color-accent)/30 to-transparent"></div>
+    <div class="text-center">
+      <p class="text-subheading font-display font-bold gradient-text">8+</p>
+      <p class="text-caption text-(--color-muted) tracking-wide">Years Exp</p>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  {% if section.settings.show_scroll %}
+    <div class="absolute bottom-8 left-1/2 flex flex-col items-center gap-2 z-10">
+      <span class="text-caption text-(--color-muted) tracking-widest uppercase">Scroll</span>
+      <div class="w-6 h-10 rounded-full border-2 border-(--color-muted)/30 flex justify-center pt-2">
+        <div class="w-1 h-2 bg-(--color-accent) rounded-full animate-bounce-dot"></div>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  /* Marquee */
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll-left 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: var(--font-display--family);
+    font-size: clamp(1.5rem, 4vw, 3.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--color-foreground) 0%, var(--color-accent) 50%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradient-text 8s ease infinite;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.15));
+  }
+  @keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes gradient-text {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Animated gradient shift for hero bg */
+  .animate-gradient-shift {
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  /* Bounce dot in scroll indicator */
+  .animate-bounce-dot {
+    animation: bounce-dot 2s ease infinite;
+  }
+  @keyframes bounce-dot {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(12px); opacity: 0.3; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Art Commission"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Running Text",
+      "default": "Let Me Draw Your Imagination Into Reality"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "As an artist, I'm here to bring your ideas to life. Let's create something amazing together."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Check My Product"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll",
+      "label": "Show Scroll Indicator",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "settings": {
+        "subheading": "Art Commission",
+        "tagline": "Let Me Draw Your Imagination Into Reality",
+        "button_label": "Check My Product",
+        "show_scroll": true
+      }
+    }
+  ]
+}
+{% endschema %}

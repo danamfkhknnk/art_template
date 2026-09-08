@@ -11,3 +11,10 @@
 #
 # Ignore templates and sections with a regular expression:
 #   /(templates|sections)/.*\.json/
+
+# Ignore source files and node_modules
+src/*
+node_modules/*
+package.json
+package-lock.json
+tailwind.config.js
